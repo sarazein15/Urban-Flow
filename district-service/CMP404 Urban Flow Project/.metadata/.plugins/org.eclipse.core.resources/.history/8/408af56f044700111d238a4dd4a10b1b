@@ -1,0 +1,5 @@
+package com.example.districtservice;
+
+public class CorsConfig {
+
+}

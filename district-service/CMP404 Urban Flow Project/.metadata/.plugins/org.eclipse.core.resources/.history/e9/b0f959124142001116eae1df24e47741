@@ -1,0 +1,19 @@
+package com.example.districtservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Service
+public class AssetClient {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private final String ASSET_SERVICE_URL = "https://urbanflow-asset-service-a3d2hef9hqbscsh8.switzerlandnorth-01.azurewebsites.net/";
+
+    public Object getAssetsByDistrict(Long districtId) {
+        String url = ASSET_SERVICE_URL + "/api/districts/" + districtId + "/assets";
+        return restTemplate.getForObject(url, Object.class);
+    }
+}

@@ -1,0 +1,5 @@
+package com.example.districtservice.client;
+
+public class AssetClient {
+
+}

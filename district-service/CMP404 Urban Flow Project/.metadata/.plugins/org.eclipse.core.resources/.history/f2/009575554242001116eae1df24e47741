@@ -1,0 +1,84 @@
+package com.example.districtservice.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.districtservice.entity.District;
+import com.example.districtservice.entity.Zone;
+import com.example.districtservice.repository.DistrictRepository;
+import com.example.districtservice.service.DistrictService;
+import com.example.districtservice.service.ZoneService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.example.districtservice.client.AssetClient;
+import com.example.districtservice.client.AssetDto;
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api/districts")
+public class DistrictController {
+
+    @Autowired
+    private DistrictService districtService;
+
+    @Autowired
+    private ZoneService zoneService;
+
+    @PostMapping
+    public District createDistrict(@RequestBody District district) {
+        return districtService.createDistrict(district);
+    }
+
+    @GetMapping
+    public List<District> getAllDistricts() {
+        return districtService.getAllDistricts();
+    }
+
+    @GetMapping("/{id}")
+    public District getDistrictById(@PathVariable Long id) {
+        return districtService.getDistrictById(id);
+    }
+
+    @PutMapping("/{id}")
+    public District updateDistrict(@PathVariable Long id, @RequestBody District updatedDistrict) {
+        return districtService.updateDistrict(id, updatedDistrict);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDistrict(@PathVariable Long id) {
+        districtService.deleteDistrict(id);
+    }
+
+    @PostMapping("/{id}/zones")
+    public Zone createZone(@PathVariable Long id, @RequestBody Zone zone) {
+        return zoneService.createZone(zone, id);
+    }
+    
+    @Autowired
+    private AssetClient assetClient;
+
+    @Autowired
+    private UserClient userClient;
+    
+    @Autowired
+    private DistrictRepository districtRepository;
+    
+    @GetMapping("/{id}/full")
+    public Map<String, Object> getFullDistrict(@PathVariable Long id) {
+        Map<String, Object> result = new HashMap<>();
+
+        District district = districtRepository.findById(id).orElseThrow();
+
+        result.put("district", district);
+        result.put("assets", assetClient.getAssetsByDistrict(id));
+        result.put("users", userClient.getUsers());
+
+        return result;
+    }
+}
+

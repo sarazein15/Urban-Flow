@@ -1,0 +1,12 @@
+spring.application.name=districtservice
+
+spring.datasource.url=jdbc:mysql://urbanflow15.mysql.database.azure.com:3306/districtdb?useSSL=true&requireSSL=true&serverTimezone=UTC
+spring.datasource.username=urbanflow15
+spring.datasource.password=serviceFlow15$
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+server.port = 8083
+
+asset.service.url=https://urbanflow-asset-service.azurewebsites.net

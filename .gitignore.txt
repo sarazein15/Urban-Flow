@@ -1,0 +1,16 @@
+target/
+bin/
+*.class
+*.jar
+
+.metadata/
+.settings/
+.project
+.classpath
+
+.idea/
+.vscode/
+
+.env
+
+*.log
